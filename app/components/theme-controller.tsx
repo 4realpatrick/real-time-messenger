@@ -18,7 +18,7 @@ const ThemeController = () => {
     document?.documentElement.setAttribute("data-theme", currentTheme);
   }, [currentTheme]);
   return (
-    <div className="dropdown mb-72">
+    <div className="dropdown">
       <div tabIndex={0} role="button" className="btn m-1 btn-primary">
         Theme
         <svg

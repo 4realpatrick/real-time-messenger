@@ -74,7 +74,6 @@ const authForm = () => {
       .finally(() => {
         setIsLoading(false);
       });
-    // NextAuth Social Sign in
   };
   const toggleVariant = useCallback(() => {
     setVariant(variant === "LOGIN" ? "REGISTER" : "LOGIN");
@@ -142,7 +141,7 @@ const authForm = () => {
             socialName="discord"
           />
         </div>
-        <div className="flex gap-2 justify-center text-sm mt-5 px-2 text-gray-500 hover:text-primary cursor-pointer items-center">
+        <div className="flex gap-2 justify-center text-sm mt-5 px-2 text-gray-500 items-center">
           <div>
             {variant === "LOGIN"
               ? "New to Messenger?"
