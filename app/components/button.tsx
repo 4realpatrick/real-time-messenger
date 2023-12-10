@@ -9,12 +9,11 @@ type TButtonType =
   | "accent"
   | "ghost"
   | "link"
-  | "link"
+  | "info"
   | "success"
   | "warning"
   | "error";
-// Extra small | Small | Medium（default） | Large
-type TButtonSize = "xs" | "sm" | "md" | "lg";
+
 interface IButtonProps {
   actionType?: "button" | "submit" | "reset";
   fullWidth?: boolean;
@@ -36,7 +35,7 @@ const Button: React.FC<IButtonProps> = ({
   fullWidth = false,
   extraTailwindCls = "",
   loading = false,
-  actionType,
+  actionType = "button",
   disabled,
   responsive,
   onClick,
@@ -44,7 +43,7 @@ const Button: React.FC<IButtonProps> = ({
   return (
     <button
       className={clsx(
-        `btn btn-${type} btn-${size}`,
+        `btn btn-${size} btn-${type} focus-visible:outline-none`,
         outline && "btn-outline",
         fullWidth && "btn-block",
         responsive && "sm:btn-sm md:btn-md lg:btn-lg",
