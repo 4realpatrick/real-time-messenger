@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/app/components/button";
 import Input from "@/app/components/input";
 import Modal from "@/app/components/modal";
 import PersonSelector from "@/app/components/person-selector";
@@ -35,13 +36,14 @@ const GroupChatModal: React.FC<IGroupChatModal> = ({
   });
   const members = watch("members");
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
     setIsLoading(true);
     axios
       .post("/api/conversations", {
         ...data,
         isGroup: true,
       })
-      .then(() => {
+      .then((res) => {
         router.refresh();
         onClose();
       })
@@ -88,6 +90,14 @@ const GroupChatModal: React.FC<IGroupChatModal> = ({
           </div>
         </div>
         <div className="divider"></div>
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <Button disabled={isLoading} onClick={onClose} type="secondary">
+            Cancel
+          </Button>
+          <Button disabled={isLoading} actionType="submit">
+            Create
+          </Button>
+        </div>
       </form>
     </Modal>
   );

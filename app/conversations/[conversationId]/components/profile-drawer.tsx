@@ -15,7 +15,7 @@ import useClipboard from "@/app/hooks/use-clipboard";
 import toast from "react-hot-toast";
 import ConfirmModal from "./confirm-modal";
 import useKeyBoardWatchEvent from "@/app/hooks/use-key-board-watch-event";
-// import AvatarGroup from "@/app/components/AvatarGroup";
+import AvatarGroup from "@/app/components/avatar-group";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -43,8 +43,8 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
   // const { members } = useActiveList();
   // const isActive = members.indexOf(otherUser?.email!) !== -1;
-  const handleCopy = () => {
-    write(otherUser.email!)
+  const handleCopy = (text: string) => {
+    write(text)
       .then((v) => {
         toast.success("Copy successfully");
       })
@@ -58,6 +58,11 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     }
 
     // return isActive ? "Active" : "Offline";
+  }, [data]);
+
+  const groupEmails = useMemo(() => {
+    if (data.isGroup) return data.users.map((user) => user.email).join(", ");
+    return "";
   }, [data]);
   useKeyBoardWatchEvent(["ESC"], onClose);
   return (
@@ -94,7 +99,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                   leaveTo="translate-x-full"
                 >
                   <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                    <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                    <div className="flex h-full flex-col overflow-y-scroll bg-base-100 py-6 shadow-xl">
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-end">
                           <div className="ml-3 flex h-7 items-center">
@@ -109,14 +114,13 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                         <div className="flex flex-col items-center">
                           <div className="mb-2">
                             {data.isGroup ? (
-                              // <AvatarGroup users={data.users} />
-                              <></>
+                              <AvatarGroup users={data.users} />
                             ) : (
                               <Avatar user={otherUser} />
                             )}
                           </div>
-                          <div>{title}</div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-base-content">{title}</div>
+                          <div className="text-sm text-base-content">
                             {statusText}
                           </div>
                           <div className="flex gap-10 my-8">
@@ -125,7 +129,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               className="flex flex-col gap-3 items-center cursor-pointer group"
                             >
                               <div
-                                className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-base-100 transition"
+                                className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-base-100 transition"
                                 onClick={() => setConfirmOpen(true)}
                               >
                                 <IoTrash size={20} />
@@ -139,14 +143,20 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                               {data.isGroup && (
                                 <div>
-                                  <dt className="text-sm font-medium  text-gray-500 sm:w-40 sm:flex-shrink-0">
+                                  <dt className="text-sm font-medium  text-base-content sm:w-40 sm:flex-shrink-0">
                                     Emails
                                   </dt>
-                                  <dd className="mt-1 text-sm  text-gray-900 sm:col-span-2">
-                                    {data.users
-                                      .map((user) => user.email)
-                                      .join(", ")}
-                                  </dd>
+                                  <div
+                                    className="tooltip"
+                                    data-tip="click to copy"
+                                  >
+                                    <dd
+                                      className="mt-1 text-sm  text-base-content sm:col-span-2 hover:text-primary cursor-pointer"
+                                      onClick={() => handleCopy(groupEmails)}
+                                    >
+                                      {groupEmails}
+                                    </dd>
+                                  </div>
                                 </div>
                               )}
                               {!data.isGroup && (
@@ -160,7 +170,9 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                       size="sm"
                                       type="ghost"
                                       outline
-                                      onClick={handleCopy}
+                                      onClick={() =>
+                                        handleCopy(otherUser.email!)
+                                      }
                                     >
                                       copy
                                     </Button>

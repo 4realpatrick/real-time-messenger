@@ -2,6 +2,7 @@
 import { User } from "@prisma/client";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
+import AvatarPlaceholder from "./avatar-placeholder";
 interface IAvatarProps {
   user: User;
 }
@@ -23,13 +24,7 @@ const Avatar: React.FC<IAvatarProps> = ({ user }) => {
         </div>
       );
     } else {
-      return (
-        <div className="avatar online placeholder">
-          <div className="bg-base-200 text-primary rounded-full w-9 h-9 md:h-11 md:w-11 ring ring-primary">
-            <span className="text-xl">{user?.name?.[0].toUpperCase()}</span>
-          </div>
-        </div>
-      );
+      return <AvatarPlaceholder name={user.name!} />;
     }
   }, [user?.image, user?.name, isError]);
   return <>{memoAvatar}</>;

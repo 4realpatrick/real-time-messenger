@@ -10,6 +10,7 @@ import Modal from "../modal";
 import Input from "../input";
 import Image from "next/image";
 import Button from "../button";
+import AvatarPlaceholder from "../avatar-placeholder";
 interface ISettingsModalProps {
   currentUser: User;
   isOpen: boolean;
@@ -86,22 +87,17 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({
                       alt="Avatar"
                     />
                   ) : (
-                    <div className="avatar online placeholder">
-                      <div className="bg-base-200 text-primary rounded-full w-9 h-9 md:h-11 md:w-11 ring ring-primary">
-                        <span className="text-xl">
-                          {currentUser?.name?.[0].toUpperCase()}
-                        </span>
-                      </div>
-                    </div>
+                    <AvatarPlaceholder name={currentUser?.name} />
                   )}
                   <CldUploadButton
                     options={{ maxFiles: 1 }}
                     onUpload={handleUpload}
                     uploadPreset="vcpzquyc"
+                    className="btn btn-md btn-primary btn-outline"
+                    // @ts-expect-error
+                    disabled={isLoading}
                   >
-                    <Button disabled={isLoading} outline>
-                      Change
-                    </Button>
+                    Change
                   </CldUploadButton>
                 </div>
               </div>

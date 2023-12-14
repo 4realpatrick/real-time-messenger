@@ -5,12 +5,14 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import ImageModal from "./image-modal";
 interface IMessageProps {
   isLast: boolean;
   data: FullMessage;
 }
 const MessageBox: React.FC<IMessageProps> = ({ isLast, data }) => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
   const sesstion = useSession();
   // 是否是用户本身发送的消息
   const isOwn = sesstion?.data?.user?.email === data.sender.email;
@@ -39,9 +41,15 @@ const MessageBox: React.FC<IMessageProps> = ({ isLast, data }) => {
         </time>
       </div>
       <div className={clsx("chat-bubble", isOwn && "chat-bubble-primary")}>
+        <ImageModal
+          src={data.image}
+          isOpen={imageModalOpen}
+          onClose={() => setImageModalOpen(false)}
+        />
         {data.image ? (
           <Image
-            alt="image"
+            onClick={() => setImageModalOpen(true)}
+            alt="Image"
             height={288}
             width={288}
             src={data.image}

@@ -27,6 +27,7 @@ const PersonSelector: React.FC<IPersonSelectorProps> = ({
           options={options}
           menuPortalTarget={document.body}
           styles={{
+            // @ts-expect-error
             menuPortal: (base) => ({
               ...base,
               zIndex: 9999,

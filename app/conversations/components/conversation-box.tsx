@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import clsx from "clsx";
 import useOtherUser from "@/app/hooks/use-other-user";
 import Avatar from "@/app/components/avatar";
+import AvatarGroup from "@/app/components/avatar-group";
 interface IConversationBoxProps {
   data: FullConversationType;
   selected: boolean;
@@ -56,14 +57,12 @@ const ConversationBox: React.FC<IConversationBoxProps> = ({
       )}
       onClick={handleClick}
     >
-      <Avatar
-        user={otherUser}
-        // indicator={
-        //   hasSeen ? null : (
-        //     <span className="indicator-item badge badge-error badge-xs"></span>
-        //   )
-        // }
-      />
+      {data.isGroup ? (
+        <AvatarGroup users={data.users} />
+      ) : (
+        <Avatar user={otherUser} />
+      )}
+
       <div className="min-w-0 flex-1 ml-2">
         <div className="focus:outline-none">
           <div className="flex justify-between items-center mb-1">

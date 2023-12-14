@@ -20,6 +20,7 @@ const ConfirmModal: React.FC<IConfirmModalProps> = ({ isOpen, onClose }) => {
     axios
       .delete(`/api/conversations/${conversationId}`)
       .then(() => {
+        toast.success("Conversation Deleted!");
         onClose();
         router.push("/conversations");
         router.refresh();
@@ -53,10 +54,15 @@ const ConfirmModal: React.FC<IConfirmModalProps> = ({ isOpen, onClose }) => {
         </div>
       </div>
       <div className="mt-5 sm:mt-4 sm:flex sm:justify-end">
-        <Button type="ghost" onClick={onClose}>
+        <Button type="ghost" onClick={onClose} disabled={isLoading}>
           Cancel
         </Button>
-        <Button type="error" extraTailwindCls="ml-2" onClick={onDelete}>
+        <Button
+          type="error"
+          extraTailwindCls="ml-2"
+          onClick={onDelete}
+          disabled={isLoading}
+        >
           Delete
         </Button>
       </div>
