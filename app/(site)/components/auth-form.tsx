@@ -11,7 +11,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 type TVariant = "LOGIN" | "REGISTER";
 
-const authForm = () => {
+const AuthForm = () => {
   const [variant, setVariant] = useState<TVariant>("LOGIN");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const session = useSession();
@@ -157,4 +157,4 @@ const authForm = () => {
   );
 };
 
-export default authForm;
+export default AuthForm;
