@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 import { TTheme, STATIC_THEME_KEY, themeData } from "../constant/theme";
 
 const getTheme = (): TTheme => {
-  const themeFromDocument =
-    (document?.documentElement.getAttribute("data-theme") as TTheme) || null;
   const themeFromStorage = localStorage.getItem(
     STATIC_THEME_KEY
   ) as TTheme | null;
-  return themeFromDocument || themeFromStorage || "light";
+  return themeFromStorage || "light";
 };
 
 const ThemeController = () => {
@@ -19,7 +17,9 @@ const ThemeController = () => {
     setCurrentTheme(theme);
   };
   useEffect(() => {
-    document?.documentElement.setAttribute("data-theme", currentTheme);
+    if (document) {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+    }
   }, [currentTheme]);
   return (
     <div className="dropdown">
