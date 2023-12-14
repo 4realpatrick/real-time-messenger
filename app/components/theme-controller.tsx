@@ -1,11 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  TTheme,
-  STATIC_THEME_KEY,
-  getTheme,
-  themeData,
-} from "../constant/theme";
+import { TTheme, STATIC_THEME_KEY, themeData } from "../constant/theme";
+
+const getTheme = (): TTheme => {
+  const themeFromDocument =
+    (document?.documentElement.getAttribute("data-theme") as TTheme) || null;
+  const themeFromStorage = localStorage.getItem(
+    STATIC_THEME_KEY
+  ) as TTheme | null;
+  return themeFromDocument || themeFromStorage || "light";
+};
 
 const ThemeController = () => {
   const [currentTheme, setCurrentTheme] = useState<TTheme>(getTheme());
