@@ -7,7 +7,7 @@ import { Conversation, User } from "@prisma/client";
 import dayjs from "dayjs";
 
 import useOtherUser from "@/app/hooks/use-other-user";
-// import useActiveList from "@/app/hooks/useActiveList";
+import useActiveList from "@/app/hooks/use-active-list";
 
 import Avatar from "@/app/components/avatar";
 import Button from "@/app/components/button";
@@ -41,8 +41,8 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     return data.name || otherUser.name;
   }, [data.name, otherUser.name]);
 
-  // const { members } = useActiveList();
-  // const isActive = members.indexOf(otherUser?.email!) !== -1;
+  const { members } = useActiveList();
+  const isActive = members.includes(otherUser?.email!);
   const handleCopy = (text: string) => {
     write(text)
       .then((v) => {
@@ -56,8 +56,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     if (data.isGroup) {
       return `${data.users.length} members`;
     }
-
-    // return isActive ? "Active" : "Offline";
+    return isActive ? "Active" : "Offline";
   }, [data]);
 
   const groupEmails = useMemo(() => {
@@ -120,7 +119,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             )}
                           </div>
                           <div className="text-base-content">{title}</div>
-                          <div className="text-sm text-base-content">
+                          <div className="text-sm text-primary">
                             {statusText}
                           </div>
                           <div className="flex gap-10 my-8">
