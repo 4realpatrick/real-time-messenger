@@ -16,7 +16,9 @@ const ThemeController = () => {
   const [currentTheme, setCurrentTheme] = useState<TTheme>(getTheme());
   const handleThemeChange = (theme: TTheme) => (e: React.MouseEvent) => {
     if (theme === currentTheme) return;
-    localStorage.setItem(STATIC_THEME_KEY, theme);
+    if (localStorage) {
+      localStorage.setItem(STATIC_THEME_KEY, theme);
+    }
     setCurrentTheme(theme);
   };
   useEffect(() => {
