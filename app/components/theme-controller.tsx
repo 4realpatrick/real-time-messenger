@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { TTheme, STATIC_THEME_KEY, themeData } from "../constant/theme";
 
 const getTheme = (): TTheme => {
-  if (localStorage) {
+  if (typeof window !== "undefined") {
     const themeFromStorage = localStorage.getItem(
       STATIC_THEME_KEY
     ) as TTheme | null;
@@ -16,7 +16,7 @@ const ThemeController = () => {
   const [currentTheme, setCurrentTheme] = useState<TTheme>(getTheme());
   const handleThemeChange = (theme: TTheme) => (e: React.MouseEvent) => {
     if (theme === currentTheme) return;
-    if (localStorage) {
+    if (typeof window !== "undefined") {
       localStorage.setItem(STATIC_THEME_KEY, theme);
     }
     setCurrentTheme(theme);
