@@ -23,7 +23,12 @@ const AvatarGroup: React.FC<IAvatarGroupProps> = ({ users = [] }) => {
           className={`absolute inline-block rounded-full overflow-hidden h-[21px] w-[21px] ${positionMap[index]}`}
         >
           {user.image ? (
-            <Image alt="Avatar" fill src={user.image} />
+            <Image
+              alt="Avatar"
+              fill
+              src={user.image}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           ) : (
             <AvatarPlaceholder name={user.name!} />
           )}

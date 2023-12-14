@@ -4,14 +4,12 @@ import { useCallback, useMemo } from "react";
 import { useSession } from "next-auth/react";
 
 import { FullConversationType } from "@/app/types";
-import { Conversation, Message, User } from "@prisma/client";
-
-import { format } from "date-fns";
 
 import clsx from "clsx";
 import useOtherUser from "@/app/hooks/use-other-user";
 import Avatar from "@/app/components/avatar";
 import AvatarGroup from "@/app/components/avatar-group";
+import dayjs from "dayjs";
 interface IConversationBoxProps {
   data: FullConversationType;
   selected: boolean;
@@ -76,7 +74,7 @@ const ConversationBox: React.FC<IConversationBoxProps> = ({
             </p>
             {lastMessage?.createdAt && (
               <p className="text-sx text-gray-400 font-light">
-                {format(new Date(lastMessage.createdAt), "p")}
+                {dayjs(lastMessage.createdAt).format("h:mm A")}
               </p>
             )}
           </div>

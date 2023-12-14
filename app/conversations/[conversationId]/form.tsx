@@ -34,6 +34,7 @@ const Form = () => {
       });
   };
   const handleUploadPhoto = (result: CldUploadWidgetResults) => {
+    if (isLoading) return;
     setIsLoading(true);
     axios
       .post("/api/messages", {
@@ -52,8 +53,12 @@ const Form = () => {
         onUpload={handleUploadPhoto}
         // https://console.cloudinary.com/settings/c-59cea2b94253c149a4a03f1aba1520/upload_presets/new
         uploadPreset="vcpzquyc"
+        className={`${isLoading && "pointer-events-none"}`}
       >
-        <HiPhoto size={30} className="text-primary" />
+        <HiPhoto
+          size={30}
+          className={`text-primary ${isLoading && "!text-base-content"}`}
+        />
       </CldUploadButton>
 
       <form

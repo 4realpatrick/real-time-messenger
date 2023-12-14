@@ -14,7 +14,13 @@ const ImageModal: React.FC<IImageModalProps> = ({ src, isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-80 h-80">
-        <Image alt="Image" className="object-cover" fill src={src} />
+        <Image
+          alt="Image"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+          fill
+          src={src}
+        />
       </div>
     </Modal>
   );

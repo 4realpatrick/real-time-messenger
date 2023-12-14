@@ -80,6 +80,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({
                 <div className="mt-2 flex items-center gap-x-3">
                   {image || currentUser.image ? (
                     <Image
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       width={48}
                       height={48}
                       className="rounded-full"

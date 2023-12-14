@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose, IoTrash } from "react-icons/io5";
 import { Conversation, User } from "@prisma/client";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 
 import useOtherUser from "@/app/hooks/use-other-user";
 // import useActiveList from "@/app/hooks/useActiveList";
@@ -34,7 +34,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   const otherUser = useOtherUser(data);
   const { write } = useClipboard();
   const joinedDate = useMemo(() => {
-    return format(new Date(otherUser.createdAt), "PP");
+    return dayjs(otherUser.createdAt).format("YYYY-MMMM-DD h:mm A");
   }, [otherUser.createdAt]);
 
   const title = useMemo(() => {
